@@ -32,3 +32,21 @@ class User(ABC):
       "email":self._email,
       "role": self.__class__.__name__
     }
+  
+class Customer(User):
+  """Represents a regular customer who ca make bookings"""
+
+  def __init__(self, user_id : str, name: str, email: str):
+    super().__init__(user_id, name, email)
+
+  def get_role_permissions(self) -> list[str]:
+    return["VIEW_RESOURCES","CREATE_RESERVATIONS","CANCEL_OWN_RESERVEATIONS"]
+
+class Admin(User):
+  """represents an admin who manages resources and all bookings"""
+
+  def __init__(self, user_id:str, name:str, email:str):
+    super().__init__(user_id, name, email)
+
+  def get_role_permissions(self) -> list[str]:
+    return ["VIEW_RESOURCES", "CREATE_RESERVATIONS","CANCEL_ANY_RESERVATION","ADD_RESOURCE","REMOVE_RESOURCE"]
